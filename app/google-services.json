@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "905368153913",
+    "firebase_url": "https://recuperaciodanielselma.firebaseio.com",
+    "project_id": "recuperaciodanielselma",
+    "storage_bucket": "recuperaciodanielselma.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905368153913:android:cd46d21c18bdc7d5",
+        "android_client_info": {
+          "package_name": "com.example.dani.recuperaciodanielselma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905368153913-hj1dcmb0meio6la5vppno7rr15q8lof1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dani.recuperaciodanielselma",
+            "certificate_hash": "1b8352121468b149d39778e5b32e8581a6efd642"
+          }
+        },
+        {
+          "client_id": "905368153913-ijdl2r2r2mt62m29a7fk8a9r54vlt31d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV1oDA4YgAzralfj2uqtEzeqW3HjTVUiE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905368153913-ijdl2r2r2mt62m29a7fk8a9r54vlt31d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
