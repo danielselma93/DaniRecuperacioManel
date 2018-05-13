@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 
-public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.ViewHolderProductos>{
+public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.ViewHolderProductos> {
 
     //Necesario para recuperar imagen de producto
     //Listado de cursos con los que trabajará el recyclerView
@@ -118,7 +118,11 @@ public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.Vi
         holder.modificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modificarUsuario(holder.textoUserId.getText().toString());
+
+                MainActivity acitivty = (MainActivity) v.getContext();
+                FragmentDadesUsuari dades = FragmentDadesUsuari.newInstance(holder.textoUserId.getText().toString());
+                acitivty.getSupportFragmentManager().beginTransaction().replace(R.id.FrameNav, dades).commit();
+
             }
         });
 
@@ -132,6 +136,13 @@ public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.Vi
 
     public void modificarUsuario(String userId) {
 
+
+
+       /* FragmentTransaction transaccion;
+        FragmentDadesUsuari fragmentDadesUsuari = FragmentDadesUsuari.newInstance(userId);
+        transaccion = getFragmentManager().beginTransaction().replace(R.id.FrameNav,fragmentDadesUsuari);
+        transaccion.commit();
+*/
     }
 
 
@@ -162,5 +173,6 @@ public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.Vi
             }
         });
     }
+
 
 }

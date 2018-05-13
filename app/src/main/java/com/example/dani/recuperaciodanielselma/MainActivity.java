@@ -3,6 +3,7 @@ package com.example.dani.recuperaciodanielselma;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -106,7 +107,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {*/
 
         }else if (id == R.id.info) {
-            dbRef = FirebaseDatabase.getInstance().getReference("usuarios");
+
+            DialogoPersonalizado e = new DialogoPersonalizado();
+            e.show(getSupportFragmentManager(),"");
+
+           /* dbRef = FirebaseDatabase.getInstance().getReference("usuarios");
 
             Query q = dbRef.orderByChild("idUser");
 
@@ -135,7 +140,7 @@ public class MainActivity extends AppCompatActivity
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-            });
+            });/*
 
 
 

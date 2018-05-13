@@ -41,6 +41,7 @@ public class FragmentDadesUsuari extends Fragment {
     private EditText contra;
     private EditText userId;
     public static FirebaseAuth firebaseAuth;
+    public static String idRecibida;
     private DatabaseReference db;
      int estadoBd=0;
      int estadoEmail=0;
@@ -56,9 +57,11 @@ public class FragmentDadesUsuari extends Fragment {
     public static FragmentDadesUsuari newInstance(String id) {
         FragmentDadesUsuari fragment = new FragmentDadesUsuari();
         if(id==null){
+            parametros=0;
         }else{
-
+            idRecibida=id;
             parametros=1;
+
         }
         //Bundle args = new Bundle();
         //fragment.setArguments(args);    -- No necesitamos parámetros
@@ -76,42 +79,88 @@ public class FragmentDadesUsuari extends Fragment {
         direccion=(EditText)v.findViewById(R.id.editTextAdresa);
         email=(EditText)v.findViewById(R.id.editTextEmail);
         contra=(EditText)v.findViewById(R.id.editTextPassword);
-        volver=(Button)v.findViewById(R.id.buttonVolver);
-
-        volver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent resultat = new Intent();
-
-                getActivity().setResult(RESULT_CANCELED, resultat);
-                getActivity().finish();
-            }
-        });
         registrar=(Button)v.findViewById(R.id.buttonOk);
+        volver=(Button)v.findViewById(R.id.buttonVolver);
+        if(parametros==0){
+            volver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent resultat = new Intent();
+
+                    getActivity().setResult(RESULT_CANCELED, resultat);
+                    getActivity().finish();
+                }
+            });
+
+            registrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(parametros==0){
+                        if(userId.getText().toString().equals("")|nom.getText().toString().equals("")|contra.getText().toString().equals("")| cognom.getText().toString().equals("")| direccion.getText().toString().equals("")|email.getText().toString().equals("")){
+                            Toast.makeText(getContext(), "Debes de rellenar todos los campos", Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            String nombre=nom.getText().toString();
+                            String id=userId.getText().toString();
+                            String apellido=cognom.getText().toString();
+
+                            String calle=direccion.getText().toString();
+                            String correo=email.getText().toString();
+                            String password=contra.getText().toString();
+
+                            insertarUsuarioBd(nombre,apellido,correo,password,calle,id);
+
+
+                        }
+
+                    }else{
+
+                    }
+                }
+
+            });
+        }else{
+            metodeCarregaDades();
+            volver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            registrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
+
+
+
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(parametros==0){
+
                 if(userId.getText().toString().equals("")|nom.getText().toString().equals("")|contra.getText().toString().equals("")| cognom.getText().toString().equals("")| direccion.getText().toString().equals("")|email.getText().toString().equals("")){
                     Toast.makeText(getContext(), "Debes de rellenar todos los campos", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    String nombre=nom.getText().toString();
-                    String id=userId.getText().toString();
-                    String apellido=cognom.getText().toString();
+                           /* String nombre=nom.getText().toString();
+                            String id=userId.getText().toString();
+                            String apellido=cognom.getText().toString();
 
-                    String calle=direccion.getText().toString();
-                    String correo=email.getText().toString();
-                    String password=contra.getText().toString();
+                            String calle=direccion.getText().toString();
+                            String correo=email.getText().toString();
+                            String password=contra.getText().toString();
 
-                    insertarUsuarioBd(nombre,apellido,correo,password,calle,id);
-
+*/                  guardarCambios();
+                    Toast.makeText(getContext(), "He cambiado de funcion 12", Toast.LENGTH_SHORT).show();
 
                 }
 
-            }else{
 
-            }
+
+
             }
         });
         return v;
@@ -201,7 +250,7 @@ public class FragmentDadesUsuari extends Fragment {
     public void metodeCarregaDades(){
         db = FirebaseDatabase.getInstance().getReference("usuarios");
 
-        Query q = db.orderByChild("correo").equalTo(firebaseAuth.getCurrentUser().getEmail());
+        Query q = db.orderByChild("idUser").equalTo(idRecibida);
 
         q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -236,6 +285,31 @@ public class FragmentDadesUsuari extends Fragment {
 
             }
         });
+    }
+    public void guardarCambios(){
+        Query q= db.orderByChild("idUser").equalTo(userId.getText().toString());
+
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot datasnapshot: dataSnapshot.getChildren()){
+                    String clave=datasnapshot.getKey();
+                    db.child(clave).child("nombre").setValue(nom.getText().toString());
+                    db.child(clave).child("apellidos").setValue(cognom.getText().toString());
+                    db.child(clave).child("direccion").setValue(direccion.getText().toString());
+
+                    Toast.makeText(getContext(), "Cambios guardados", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
 }

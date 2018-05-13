@@ -35,6 +35,7 @@ public class Activity_Login extends AppCompatActivity {
         acceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ejecutarLogIn();
             }
         });
@@ -63,22 +64,26 @@ public class Activity_Login extends AppCompatActivity {
         String unCorreo=editNomUser.getText().toString();
         String lacontra=editContra.getText().toString();
         firebaseAuth.signInWithEmailAndPassword(unCorreo, lacontra)
+
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            Toast.makeText(Activity_Login.this, "Estarias dentro   ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Activity_Login.this, ""+task.getException(), Toast.LENGTH_LONG).show();
+
+                            Toast.makeText(Activity_Login.this, "Estarias dentro   ", Toast.LENGTH_LONG).show();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             Intent intent = new Intent(Activity_Login.this, MainActivity.class);
                             startActivity(intent);
                             //updateUI(user);
                         } else {
+                            Toast.makeText(Activity_Login.this, ""+task.getException(), Toast.LENGTH_LONG).show();
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(Activity_Login.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                                    Toast.LENGTH_LONG).show();
                             //updateUI(null);
                         }
 
